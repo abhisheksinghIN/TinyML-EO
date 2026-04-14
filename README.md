@@ -5,11 +5,10 @@ From a signal processing perspective, each layer performs a composition of three
 
 Despite the reduced numerical precision, the encoder–decoder structure preserves multi-scale feature extraction and reconstruction. The encoder progressively compresses spatial information into a compact latent representation, the bottleneck captures global contextual dependencies under quantisation constraints, and the decoder reconstructs spatial detail through skip-connected feature fusion. This design enables efficient dense prediction while maintaining robustness to quantisation-induced noise.
 
-Quantised models offer:
-\begin{itemize}
-    \item reduced memory footprint (8-bit weights vs.\ 32-bit floating point),
-    \item reduced compute cost (integer MACs),
-    \item reduced energy consumption,
-    \item improved suitability for FPGA/ASIC acceleration,
-    \item robustness due to flatter loss landscapes.
-\end{itemize}
+# Quantised models offer:
+- reduced memory footprint (8-bit weights vs.\ 32-bit floating point),
+- reduced compute cost,
+- reduced energy consumption,
+- improved suitability for FPGA/ASIC acceleration,
+- robustness due to flatter loss landscapes.
+
