@@ -1,4 +1,4 @@
-# Quantised Deep Learning Model for Eearth Observation Application
+# Quantised Deep Learning Model for Earth Observation Application
 The proposed Quantized-UNet can be interpreted as a discrete approximation of a standard UNet, where all continuous-valued feature transformations are projected onto a finite set of representable levels defined by the quantisation bit-width. Instead of operating in a continuous floating-point space, the network learns a mapping in a constrained integer lattice, where both weights and activations belong to uniformly quantised sets.
 
 From a signal processing perspective, each layer performs a composition of three operations: (i) linear filtering via quantised convolution, (ii) distribution normalisation via batch normalisation, and (iii) nonlinear projection via quantised activation. This results in a piecewise-constant approximation of the underlying feature space, where representational capacity is controlled by the quantisation resolution.
