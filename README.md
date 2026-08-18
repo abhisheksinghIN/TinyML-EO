@@ -1,14 +1,38 @@
 # Quantized Deep Learning Model for Earth Observation Application
-The proposed Quantized-UNet can be interpreted as a discrete approximation of a standard UNet, where all continuous-valued feature transformations are projected onto a finite set of representable levels defined by the quantisation bit-width. Instead of operating in a continuous floating-point space, the network learns a mapping in a constrained integer lattice, where both weights and activations belong to uniformly quantised sets.
+A lightweight semantic segmentation framework for Earth Observation (EO) imagery using quantized deep learning models.
 
-From a signal processing perspective, each layer performs a composition of three operations: (i) linear filtering via quantised convolution, (ii) distribution normalisation via batch normalisation, and (iii) nonlinear projection via quantised activation. This results in a piecewise-constant approximation of the underlying feature space, where representational capacity is controlled by the quantisation resolution.
+The project implements a Quantized U-Net-based segmentation model for Sentinel-1 (SAR) and Sentinel-2 (multispectral) data, with support for INT8 quantization and ONNX export for edge/TinyML deployment.
 
-Despite the reduced numerical precision, the encoder–decoder structure preserves multi-scale feature extraction and reconstruction. The encoder progressively compresses spatial information into a compact latent representation, the bottleneck captures global contextual dependencies under quantisation constraints, and the decoder reconstructs spatial detail through skip-connected feature fusion. This design enables efficient dense prediction while maintaining robustness to quantisation-induced noise.
+# Features
+U-Net semantic segmentation
+INT8 quantized U-Net using Brevitas
+Sentinel-1, Sentinel-2, and S1+S2 inputs
+256 × 256 image chips
+PyTorch, ONNX Runtime, and OpenVINO inference
 
-# Quantised models offer:
-- reduced memory footprint (8-bit weights vs.\ 32-bit floating point),
-- reduced compute cost,
-- reduced energy consumption,
-- improved suitability for FPGA/ASIC acceleration,
-- robustness due to flatter loss landscapes.
+# Input Mode
+Mode	Channels
+s1only	2
+s2only	13
+s1s2	15
 
+# Repository Structure
+TinyML-EO/
+├── dataset/CSV_list/     # Dataset split files
+├── networks/soaint.py    # U-Net and quantized U-Net
+├── main_INT8.py          # Training & ONNX export
+├── evaluate_INT8.py      # Evaluation & benchmarking
+└── utilsint.py           # Dataset utilities
+
+
+# Training
+Train the quantized model with Sentinel-1:
+python main_INT8.py --model qnn --s_mode s1only
+
+Sentinel-2:
+python main_INT8.py --model qnn --s_mode s2only
+
+Sentinel-1 + Sentinel-2:
+python main_INT8.py --model qnn --s_mode s1s2
+
+The training script performs validation, saves checkpoints, folds BatchNorm layers, and exports the quantized model to ONNX QCDQ format.
