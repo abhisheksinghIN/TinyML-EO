@@ -1,4 +1,4 @@
-# TinyML-EO
+# TinyML-EO - A quantized deep learning model for land cover classification
 
 A lightweight semantic segmentation framework for **Earth Observation (EO)** imagery using quantized deep learning models.
 
