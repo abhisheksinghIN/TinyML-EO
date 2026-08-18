@@ -14,7 +14,18 @@ The project implements a U-Net-based segmentation model for **Sentinel-1 (SAR)**
 - PyTorch, ONNX Runtime, and OpenVINO inference
 - Accuracy and inference-performance evaluation
 
-##
+## Dataset
+
+The repository currently contains CSV split files for the DFC2020 dataset:
+
+```text
+dataset/CSV_list/
+├── C_NYC-train_split.csv
+├── C_NYC-val_split.csv
+└── C_NYC-test.csv
+```
+
+## Input Mode
 
 | Mode     | Channels |
 | -------- | -------: |
@@ -61,7 +72,7 @@ Sentinel-1 + Sentinel-2:
 python main_INT8.py --model qnn --s_mode s1s2
 ```
 
-The training script performs validation, saves checkpoints, folds BatchNorm layers, and exports the quantized model to **ONNX QCDQ format**.
+The training script performs validation, saves checkpoints, folds BatchNorm layers, and exports the quantized model to **ONNX QCDQ format** and further exported to OpenVINO.
 
 ## Evaluation
 
@@ -74,11 +85,11 @@ python evaluate_INT8.py \
     --s_mode s1only
 ```
 
-Evaluate an ONNX model:
+Evaluate an OpenVINO model:
 
 ```bash
 python evaluate_INT8.py \
-    --model_path ./log_INT8/qnn_s1/qnn_qnn_BN.onnx \
+    --model_path ./log_INT8/qnn_s1/openvino_qnn.xml \
     --model qnn \
     --s_mode s1only
 ```
@@ -95,23 +106,7 @@ The evaluation pipeline reports:
 - Inference latency and throughput
 - CPU/GPU memory usage
 
-## Dataset
-
-The repository currently contains CSV split files for the NYC dataset:
-
-```text
-dataset/CSV_list/
-├── C_NYC-train_split.csv
-├── C_NYC-val_split.csv
-└── C_NYC-test.csv
-```
-
-The corresponding Sentinel-1, Sentinel-2, and label GeoTIFF files need to be available locally.
-
 ## Model Deployment
 
-The quantized model is exported to **ONNX QCDQ** after BatchNorm folding, providing a deployment-friendly representation for further optimization and edge/accelerator workflows.
+The quantized model is exported to **ONNX QCDQ** after BatchNorm folding, providing a deployment-friendly representation for further optimization and edge workflows.
 
-## License
-
-No explicit license file is currently included in the repository.
